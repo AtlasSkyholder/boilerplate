@@ -146,12 +146,12 @@ storiesOf("Appointment", module)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
   .add("Header", () => <Header time="12pm" />)
   .add("Empty", () => <Empty onAdd={action("onAdd")} />)
-  .add("Show", () => <Show  student="Lydia Miller-Jones" interviewers={interviewers} onEdit={action("onEdit")} onDelete={action("onDelete")}/>)
-  .add("Confirm", () => <Confirm message="Delete the appointment?" onCancel={action("onCancel")} onConfirm={action("onConfirm")}/>)
-  .add("Status", () => <Status message="Deleting"/>)
-  .add("Error", () => <Error message="Could not delete apointment." onClose={action("onClose")}/>)
-  .add("Create", () => <Create interviewers={interviewers} onCancel={action("onCancel")} onSave={action("onSave")}/>)
-  .add("Edit", () => <Edit name="Archie Cohen" interviewer={interviewer.id} interviewers={interviewers} onCancel={action("onCancel")} onSave={action("onSave")}/>)
+  .add("Show", () => <Show student="Lydia Miller-Jones" interviewer={interviewer} onEdit={action("onEdit")} onDelete={action("onDelete")} />)
+  .add("Confirm", () => <Confirm message="Delete the appointment?" onConfirm={action("onConfirm")} onCancel={action("onCancel")} />)
+  .add("Status", () => <Status message="Deleting" />)
+  .add("Error", () => <Error message="Could not delete appointment." onClose={action("onClose")} />)
+  .add("Create", () => <Create interviewers={interviewers} onSave={action("onSave")} onCancel={action("onCancel")} />)
+  .add("Edit", () => <Edit name="Matt" interviewers={interviewers} interviewer={interviewer} onSave={action("onSave")} onCancel={action("onCancel")} />)
   .add("Appointment Empty", () => (
     <Fragment>
       <Appointment id={1} time="12pm" />
@@ -163,10 +163,8 @@ storiesOf("Appointment", module)
       <Appointment
         id={1}
         time="12pm"
-        interview={{ student: "Lydia Miller-Jones", interviewer }} 
-        interviewers={interviewers}
+        interview={{ student: "Lydia Miller-Jones", interviewer }}
       />
       <Appointment id="last" time="1pm" />
     </Fragment>
   ))
-  
