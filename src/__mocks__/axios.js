@@ -80,7 +80,7 @@ export default {
     }
   }),
 
-/*   put: jest.fn(() => {
+  put: jest.fn(() => {
     return Promise.resolve({
       status: 204,
       statusText: "No Content"
@@ -92,5 +92,5 @@ export default {
       status: 204,
       statusText: "No Content"
     });
-  }) */
+  })
 }
