@@ -34,16 +34,10 @@ Interview Scheduler is a full stack web application built with React and a datab
 - react-hooks-testing-library
 - react-scripts
 
-## Getting Started
-
-- Install all dependencies (using the `npm install` command).
-- 
-
-
-
 ## Setup
 
 Install dependencies with `npm install`.
+For the database API, head to : https://github.com/lighthouse-labs/scheduler-api and follow the instructions on the README.md file for the setup.
 
 ## Running Webpack Development Server
 
