@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import useVisualMode from "hooks/useVisualMode";
 
@@ -27,11 +27,18 @@ export default function Appointment (props) {
     props.interview ? SHOW : EMPTY
   );
 
-  function edit() {
-    transition(EDIT)
-  }
+  useEffect(() => {
+    if (props.interview && mode === EMPTY) {
+     transition(SHOW);
+    }
+    if (props.interview === null && mode === SHOW) {
+     transition(EMPTY);
+    }
+  }, [props.interview, transition, mode]);
+
 
   function save(name, interviewer) {
+    if (interviewer !== null && name !== "") {
     const interview = {
       student: name,
       interviewer
@@ -41,6 +48,7 @@ export default function Appointment (props) {
     .then(() => transition(SHOW))  
     .catch(error => {transition(ERROR_SAVE, true);
     });
+   }
   };
 
   function deleteAppointment() {
@@ -62,12 +70,12 @@ export default function Appointment (props) {
     <article data-testid="appointment" className="appointment">
     <Header time={props.time} />
     {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-    {mode === SHOW && (
+    {mode === SHOW && props.interview && (
       <Show
         student={props.interview.student}
         interviewer={props.interview.interviewer}
         onDelete={deleteAppointment}
-        onEdit={edit}
+        onEdit={() => transition(EDIT)}
       />
     )}
     {mode === CREATE && (
@@ -96,7 +104,7 @@ export default function Appointment (props) {
     {mode === SAVING && (<Status message={SAVING}/>)}
     {mode === DELETING && (<Status message={DELETING}/>)}
     {mode === ERROR_SAVE && (<Error message={"Could not save the appointment"} onClose={back}/>)}
-    {mode === ERROR_DELETE && (<Error message={"Could not save the appointment"} onClose={back}/>)}
+    {mode === ERROR_DELETE && (<Error message={"Could not delete the appointment"} onClose={back}/>)}
   </article>
   );
 }
