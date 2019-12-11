@@ -14,10 +14,10 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
-  const interviewers = getInterviewersForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day);  //creates the list of interviewers
 
-  const appointments = getAppointmentsForDay(state,state.day).map(appointment => {
-    const interview = getInterview(state, appointment.interview);
+  const appointments = getAppointmentsForDay(state,state.day).map(appointment => {  // creates an array of interviews
+    const interview = getInterview(state, appointment.interview);  //creates the individual interview
     return (
       <Appointment
         key={appointment.id}

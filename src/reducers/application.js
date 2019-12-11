@@ -10,9 +10,7 @@ export default function reducer(state, action) {
       return { ...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers }
 
       case SET_INTERVIEW:
-        let changeDay;
-  
-  
+        let changeDay;  //logic to update spots for interviews available
         if (1 <= action.id && action.id <= 5) {
           changeDay = 0
         } else if (6 <= action.id && action.id <= 10) {
@@ -26,7 +24,6 @@ export default function reducer(state, action) {
         }
   
         let dayArr = [...state.days];
-        console.log(state.appointments[action.id].interview)
   
         dayArr[changeDay].spots = (action.interview ?
           (state.appointments[action.id].interview ?

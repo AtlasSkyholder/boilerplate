@@ -6,7 +6,7 @@ import reducer, {
   SET_INTERVIEW
 } from "reducers/application";
 
-export default function useApplicationData() {
+export default function useApplicationData() {  // when page is loaded, sets initial day as Monday
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
@@ -15,7 +15,7 @@ export default function useApplicationData() {
 
   const setDay = day => dispatch({ type: SET_DAY, day });
 
-  useEffect(() => {
+  useEffect(() => {  // access the database for data to build the interviewers and appointments for each day
     const daysData = axios.get("/api/days");
     const appointmentsData = axios.get("/api/appointments");
     const interviewersData = axios.get("/api/interviewers");
@@ -25,7 +25,7 @@ export default function useApplicationData() {
     });
   },[]);
 
-  function bookInterview(id, interview, edit = false) {
+  function bookInterview(id, interview, edit = false) {  //creates/edits interviews, updates apointments, updates database
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -36,7 +36,7 @@ export default function useApplicationData() {
     });
   }
 
-  function cancelInterview(id) {
+  function cancelInterview(id) {  //deletes interviews, deletes apointments, updates database
     return axios.delete(`/api/appointments/${id}`)
     .then(() => {
       dispatch({type: SET_INTERVIEW, id: id, interview: null})
