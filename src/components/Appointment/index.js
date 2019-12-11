@@ -28,8 +28,6 @@ export default function Appointment (props) {
   );
 
   function save(name, interviewer) {
-    console.log(name);
-    console.log(interviewer);
     if (interviewer !== null && name !== "") {
       const interview = {
         student: name,
@@ -60,7 +58,7 @@ export default function Appointment (props) {
     props.cancelInterview(id)
     .then(() => transition(EMPTY))
     .catch(error => 
-      {debugger;transition(ERROR_DELETE, true)});
+      {transition(ERROR_DELETE, true)});
   }
   
   return (

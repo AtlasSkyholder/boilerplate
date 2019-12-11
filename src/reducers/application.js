@@ -1,7 +1,6 @@
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
-const SET_SPOTS_REMAINING = "SET_SPOTS_REMAINING";
 
 export default function reducer(state, action) {
   switch (action.type) {
@@ -9,23 +8,44 @@ export default function reducer(state, action) {
       return { ...state, day: action.day }
     case SET_APPLICATION_DATA:
       return { ...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers }
-    case SET_INTERVIEW: 
-      const appointment = { ...state.appointments[action.id], interview: { ...action.interview }};
-      const appointments = {
-        ...state.appointments,
-        [action.id]: appointment
-      };
 
-      return { ...state, appointments }
-    
-    case SET_SPOTS_REMAINING: 
-      const days = state.days.map((day) => {
-        if (day.name === state.day) {
-          return {...day, spots: action.spots}
+      case SET_INTERVIEW:
+        let changeDay;
+  
+  
+        if (1 <= action.id && action.id <= 5) {
+          changeDay = 0
+        } else if (6 <= action.id && action.id <= 10) {
+          changeDay = 1
+        } else if (11 <= action.id && action.id <= 15) {
+          changeDay = 2
+        } else if (16 <= action.id && action.id <= 20) {
+          changeDay = 3
+        } else if (21 <= action.id && action.id <= 25) {
+          changeDay = 4
         }
-        return day
-      })
-      return {...state, days}
+  
+        let dayArr = [...state.days];
+        console.log(state.appointments[action.id].interview)
+  
+        dayArr[changeDay].spots = (action.interview ?
+          (state.appointments[action.id].interview ?
+            dayArr[changeDay].spots :
+            dayArr[changeDay].spots - 1) :
+          dayArr[changeDay].spots + 1)
+  
+  
+        return {
+          ...state,
+          appointments: {
+            ...state.appointments,
+            [action.id]: {
+              ...state.appointments[action.id],
+              interview: action.interview
+            }
+          },
+          days: [...dayArr]
+        }
     
     default:
       throw new Error(
@@ -35,5 +55,5 @@ export default function reducer(state, action) {
 }
 
 export {
-  SET_DAY, SET_APPLICATION_DATA, SET_INTERVIEW, SET_SPOTS_REMAINING
+  SET_DAY, SET_APPLICATION_DATA, SET_INTERVIEW
 };

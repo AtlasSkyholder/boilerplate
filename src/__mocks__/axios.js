@@ -1,4 +1,4 @@
-const fixtures = {
+const fixtures = {    // test code for axios
   days: [
     {
       id: 1,
@@ -53,7 +53,7 @@ const fixtures = {
   }
 };
 
-export default {
+export default {    //axios code, sets status code
   get: jest.fn(url => {
     if (url === "/api/days") {
       return Promise.resolve({

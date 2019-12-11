@@ -3,8 +3,7 @@ import axios from "axios";
 import reducer, {
   SET_DAY,
   SET_APPLICATION_DATA,
-  SET_INTERVIEW,
-  SET_SPOTS_REMAINING
+  SET_INTERVIEW
 } from "reducers/application";
 
 export default function useApplicationData() {
@@ -27,25 +26,19 @@ export default function useApplicationData() {
   },[]);
 
   function bookInterview(id, interview, edit = false) {
-    const selectedDay = state.days[Math.floor(id / 5)];
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
     return axios.put(`/api/appointments/${id}`, appointment)
     .then(() => {
-      if (edit === false) {
-        dispatch({type: SET_SPOTS_REMAINING, id: id, spots: selectedDay.spots - 1 });
-      }
       dispatch({type: SET_INTERVIEW, id: id, interview: interview})
     });
   }
 
   function cancelInterview(id) {
-    const selectedDay = state.days[Math.floor(id / 5)];
     return axios.delete(`/api/appointments/${id}`)
     .then(() => {
-      dispatch({type: SET_SPOTS_REMAINING, id: id, spots: selectedDay.spots + 1 });
       dispatch({type: SET_INTERVIEW, id: id, interview: null})
     });
   }
