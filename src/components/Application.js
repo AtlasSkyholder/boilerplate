@@ -16,13 +16,12 @@ export default function Application(props) {
 
   const interviewers = getInterviewersForDay(state, state.day);
 
-  let appointmentComponents = getAppointmentsForDay(state,state.day).map(appointment => {
+  const appointments = getAppointmentsForDay(state,state.day).map(appointment => {
     const interview = getInterview(state, appointment.interview);
     return (
       <Appointment
         key={appointment.id}
-        id={appointment.id}
-        time={appointment.time}
+        {...appointment}
         interview={interview}
         interviewers={interviewers} 
         bookInterview={bookInterview} 
@@ -40,11 +39,13 @@ export default function Application(props) {
           alt="Interview Scheduler"
         />
         <hr className="sidebar__separator sidebar--centered" />
-        <nav className="sidebar__menu"><DayList 
+        <nav className="sidebar__menu">
+          <DayList 
           days={state.days}
           day={state.day}
           setDay={setDay}
-        /></nav>
+        />
+        </nav>
         <img
           className="sidebar__lhl sidebar--centered"
           src="images/lhl.png"
@@ -52,7 +53,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {appointmentComponents}
+         {appointments}
         <Appointment key="last" id="last" time="5pm" />
 
       </section>

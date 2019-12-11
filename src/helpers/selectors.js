@@ -1,48 +1,39 @@
 export function getAppointmentsForDay(state, day) {
-  const days = state.days;                  
-  const appointments = state.appointments;  
-  if (days.length === 0) {
-    return []
+  const results = [];
+  const dayObject = Object.values(state.days).filter((dayItem) => {
+    return dayItem.name === day;
+  })[0];
+  if (dayObject === undefined) {
+    return results;
   }
-
-  for (let i = 0; i < days.length; i++) { 
-    if (days[i].name === day) { 
-      let appointmentsArray = [];
-      let daysArray = days[i].appointments;
-      for (let j = 0; j < daysArray.length; j++) {
-        let keysArray = Object.keys(appointments);
-        let singleDay = daysArray[j].toString();
-        if (keysArray.includes(singleDay)) {
-          appointmentsArray.push(appointments[singleDay]);
-        }
-      }
-      return appointmentsArray;
-    }
-  }
-  return [];
+  dayObject.appointments.forEach((id) => {
+    results.push(state.appointments[id.toString()]);
+  });
+  return results;
 }
 
 export function getInterview(state, interview) {
-  if(interview) {
-    let result = {
-      "student": interview.student,
-      "interviewer": state.interviewers[interview.interviewer]
-    }
-    return result;
+  if (interview === null) {
+    return null;
   } else {
-      return null;
+    const interviewObj = {};
+    interviewObj.student = interview.student;
+    interviewObj.interviewer = state.interviewers[interview.interviewer];
+    return interviewObj;
   }
 }
 
 export function getInterviewersForDay(state, day) {
-  const interviewersForDay = [];
-  const dataFromDay = state.days.filter(data => data.name === day);
-  if (dataFromDay.length === 0) {
-    return interviewersForDay;
-  } else {
-    for (let interviewer of dataFromDay[0].interviewers) {
-      interviewersForDay.push(state.interviewers[interviewer]);
-    }
+  const results = [];
+  const dayObject = Object.values(state.days).filter((dayItem) => {
+    return dayItem.name === day;
+  })[0];
+  if (dayObject === undefined) {
+    return results;
   }
-  return interviewersForDay;
+  dayObject.interviewers.forEach((id) => {
+    results.push(state.interviewers[id]);
+  })
+
+  return results;
 }

@@ -23,6 +23,24 @@ import Error from "components/Appointment/Error";
 import Create from "components/Appointment/Form";
 import Edit from "components/Appointment/Form";
 
+const days = [
+  {
+    id: 1,
+    name: "Monday",
+    spots: 2,
+  },
+  {
+    id: 2,
+    name: "Tuesday",
+    spots: 5,
+  },
+  {
+    id: 3,
+    name: "Wednesday",
+    spots: 0,
+  },
+];
+
 storiesOf("Button", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -48,23 +66,6 @@ storiesOf("DayListItem", module)
   <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} />
 ));
 
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
 
 storiesOf("DayList", module)
   .addParameters({
@@ -133,7 +134,7 @@ storiesOf("InterviewerList", module)
     <InterviewerList
       interviewers={interviewers}
       value={3}
-      onChange={action("setInterviewer")}
+      setInterviewer={action("setInterviewer")}
     />
   ));
 
@@ -142,7 +143,7 @@ storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
-  .add("Appointment", () => <Appointment />)
+  .add("Appointment", () => <Appointment id={2}/>)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
   .add("Header", () => <Header time="12pm" />)
   .add("Empty", () => <Empty onAdd={action("onAdd")} />)
@@ -165,6 +166,6 @@ storiesOf("Appointment", module)
         time="12pm"
         interview={{ student: "Lydia Miller-Jones", interviewer }}
       />
-      <Appointment id="last" time="1pm" />
+      {<Appointment id="last" time="1pm" />}
     </Fragment>
   ))

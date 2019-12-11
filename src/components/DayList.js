@@ -13,5 +13,5 @@ export default function DayList(props) {
       setDay={props.setDay}  />
     );
   });
-  return (<ul>{dayItems}</ul>);
+  return <ul>{dayItems}</ul>;
 }
