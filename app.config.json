@@ -1,0 +1,10 @@
+{
+  "apps" : [
+    {
+      "name"      : "scheduler",
+      "script"    : "npx",
+      "interpreter": "none",
+      "args": "npm start"
+    }
+  ]
+}
